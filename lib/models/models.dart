@@ -1,0 +1,1 @@
+export 'package:marvel_comics/models/comic_model.dart';
