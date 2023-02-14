@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:marvel_comics/models/models.dart';
-import 'package:marvel_comics/services/services.dart';
 import 'package:marvel_comics/theme/app_theme.dart';
 import 'package:marvel_comics/ui/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
 class ComicsMobileColumns extends StatefulWidget {
   final String screenName;

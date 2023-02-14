@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:marvel_comics/models/models.dart';
 import 'package:marvel_comics/services/services.dart';
-import 'package:provider/provider.dart';
 
 class ComicDetailsScreen extends StatelessWidget {
   static const String routerName = 'ComicDetails';
@@ -137,16 +139,18 @@ class _Buttons extends StatelessWidget {
     
     return Row(
       children: [
-        const IconButton(
+        IconButton(
           tooltip: 'Share',
-          icon: Icon(Icons.share_outlined, size: 30,),
-          onPressed: null,
+          icon: const Icon(Icons.share_outlined, size: 30,),
+          onPressed: () {
+            Share.share(comic.urls.first.url, subject: 'Check out this Comic!');
+          },
         ),
         IconButton(
           tooltip: 'Favorite',
           icon: isFavorite
             ? Icon(Icons.star, size: 30, color: Colors.amber[600])
-            : Icon(Icons.star_outline, size: 30, color: Colors.grey[600]),
+            : const Icon(Icons.star_outline, size: 30,),
           onPressed: () {            
             final favoritesService = Provider.of<FavoritesService>(context, listen: false);
             
@@ -247,7 +251,7 @@ class _PosterAndTitleMobile extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('On Sale Date:',textAlign: TextAlign.justify,style: GoogleFonts.roboto(fontStyle: FontStyle.normal, fontWeight: FontWeight.w800, fontSize: 20,),
+                            Text('Published:',textAlign: TextAlign.justify,style: GoogleFonts.roboto(fontStyle: FontStyle.normal, fontWeight: FontWeight.w800, fontSize: 20,),
                             ),
                             Text(publishedDateFormatted, textAlign: TextAlign.justify, style: GoogleFonts.roboto(fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontSize: 16,),
                             ),

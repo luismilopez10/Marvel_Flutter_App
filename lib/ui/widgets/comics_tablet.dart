@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:marvel_comics/models/models.dart';
 import 'package:marvel_comics/theme/app_theme.dart';
 import 'package:marvel_comics/ui/widgets/widgets.dart';
@@ -22,25 +23,25 @@ class _ComicsTabletState extends State<ComicsTablet> {
   final ScrollController scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 500) {
+        widget.onNextPage();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-
-    @override
-    void initState() {
-      super.initState();
-
-      scrollController.addListener(() {
-        if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 500) {
-          widget.onNextPage();
-        }
-      });
-    }
-
-    @override
-    void dispose() {
-      scrollController.dispose();
-      super.dispose();
-    }
 
     return GridView.count(
       controller: scrollController,

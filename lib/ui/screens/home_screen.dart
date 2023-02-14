@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:marvel_comics/providers/providers.dart';
@@ -59,9 +60,10 @@ class _Pages extends StatelessWidget {
 
     return PageView(
       controller: navigationProvider.pageController,
-      physics: useMobileLayout
-        ? const NeverScrollableScrollPhysics()
-        : null,
+      //! Descomentar si se quiere quitar el cambio de tab arrastrando para Móvil. 
+      // physics: useMobileLayout
+      //   ? const NeverScrollableScrollPhysics()
+      //   : null,
       onPageChanged: (i) => navigationProvider.currentPage = i,
       children: [
         ComicsTabScreen(),

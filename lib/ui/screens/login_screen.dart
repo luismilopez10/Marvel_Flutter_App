@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:marvel_comics/providers/providers.dart';
@@ -15,6 +16,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: ChangeNotifierProvider(
         create: (_) => LoginProvider(),
@@ -23,25 +26,25 @@ class LoginScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                const SizedBox(height: 150,),
+                SizedBox(height: screenSize.height * 0.2,),
                 AuthCard(
-                  child: Column(children: const [
-                    SizedBox(height: 10),
-                    Text('LOGIN', style: TextStyle(fontFamily: 'Marvel', fontSize: 40),),
-                    SizedBox(height: 20),
-                    _LoginForm(),
+                  child: Column(children: [
+                    SizedBox(height: screenSize.height * 0.02),
+                    Text('LOGIN', style: TextStyle(fontFamily: 'Marvel', fontSize: screenSize.height * 0.055),),
+                    SizedBox(height: screenSize.height * 0.035),
+                    const _LoginForm(),
                   ]),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: screenSize.height * 0.035),
                 TextButton(
                   onPressed: () => Navigator.pushReplacementNamed(context, RegisterScreen.routerName),
                   style: ButtonStyle(
                     overlayColor: MaterialStateProperty.all(AppTheme.primary.withOpacity(0.1)),
                     shape: MaterialStateProperty.all(const StadiumBorder()),
                   ),
-                  child: const Text('Sign Up', style: TextStyle(fontSize: 16, color: AppTheme.marvelWhite),),
+                  child: const Text('Sign Up', style: TextStyle(fontSize: 18, color: AppTheme.marvelWhite),),
                 ),
-                const SizedBox(height: 50),
+                SizedBox(height: screenSize.height * 0.05),
               ],
             ),
           ),
@@ -57,6 +60,7 @@ class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginFormProvider = Provider.of<LoginProvider>(context);
+    final screenSize = MediaQuery.of(context).size;
 
     return Container(
       child: Form(
@@ -82,7 +86,7 @@ class _LoginForm extends StatelessWidget {
                   : 'Invalid Email';
               },
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: screenSize.height * 0.025),
             TextFormField(
               autocorrect: false,
               obscureText: true,
@@ -100,7 +104,7 @@ class _LoginForm extends StatelessWidget {
                   : 'The password must have at least 6 characters';
               },
             ),
-            const SizedBox(height: 15),
+            SizedBox(height: screenSize.height * 0.025),
             loginFormProvider.loginError.isNotEmpty
             ? Row(
                 children: [
@@ -111,11 +115,11 @@ class _LoginForm extends StatelessWidget {
                 ],
               )
             : Container(),
-            const SizedBox(height: 30),
+            SizedBox(height: screenSize.height * 0.04),
             _SignInButton(loginFormProvider),
-            const SizedBox(height: 25),
+            SizedBox(height: screenSize.height * 0.035),
             const _OrContinueWith(),
-            const SizedBox(height: 25),
+            SizedBox(height: screenSize.height * 0.035),
             _GoogleSignInButton(loginFormProvider),
           ],
         )
@@ -215,6 +219,7 @@ class _GoogleSignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoritesService = Provider.of<FavoritesService>(context);
+    final screenSize = MediaQuery.of(context).size;
 
     return GestureDetector(
       onTap: loginFormProvider.isLoading 
@@ -241,15 +246,14 @@ class _GoogleSignInButton extends StatelessWidget {
           print(errorMessage);
       },
       child: Container(
-        padding: const EdgeInsets.all(4),
-        width: 50,
-        height: 50,
+        padding: const EdgeInsets.all(0),
+        height: 45,
         decoration: BoxDecoration(
           border: Border.all(color: AppTheme.marvelWhite),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           color: Colors.grey[200],
         ),
-        child: Image.asset('assets/images/google.png', height: 20,),
+        child: Center(child: Image.asset('assets/images/google.png', height: 80,)),
       ),
     );
   }

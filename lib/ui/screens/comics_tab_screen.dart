@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
+
 import 'package:marvel_comics/services/services.dart';
 import 'package:marvel_comics/ui/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
 class ComicsTabScreen extends StatefulWidget {
   static const String routerName = 'ComicsTab';
@@ -21,16 +23,9 @@ class _ComicsTabScreenState extends State<ComicsTabScreen> with AutomaticKeepAli
         children: [
           ComicsBackground(),
           useMobileLayout
-            ? ComicsMobile(
-                screenName: ComicsTabScreen.routerName, 
-                comics: comicsService.comics,
-                onNextPage: () {
-                  if (!comicsService.isBusy) {
-                    comicsService.getComics();
-                  }
-                },
-              )
-            // ? ComicsMobileColumns(
+            //! Descomentar y comentar el siguiente "?" para cambiar la forma de ver los comics a Swiper
+            //! (El Swiper aún no tiene implementado el infinite scroll)
+            // ? ComicsMobile(
             //     screenName: ComicsTabScreen.routerName, 
             //     comics: comicsService.comics,
             //     onNextPage: () {
@@ -39,6 +34,15 @@ class _ComicsTabScreenState extends State<ComicsTabScreen> with AutomaticKeepAli
             //       }
             //     },
             //   )
+            ? ComicsMobileColumns(
+                screenName: ComicsTabScreen.routerName, 
+                comics: comicsService.comics,
+                onNextPage: () {
+                  if (!comicsService.isBusy) {
+                    comicsService.getComics();
+                  }
+                },
+              )
             : ComicsTablet(
                 screenName: ComicsTabScreen.routerName, 
                 comics: comicsService.comics,

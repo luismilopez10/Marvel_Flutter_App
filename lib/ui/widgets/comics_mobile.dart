@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
+
 import 'package:marvel_comics/models/models.dart';
 import 'package:marvel_comics/ui/widgets/widgets.dart';
 

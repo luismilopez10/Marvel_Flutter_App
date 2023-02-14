@@ -8,6 +8,7 @@ class AppTheme {
   static const Color marvelGreyDark = Color(0xFF151515);
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
+    scaffoldBackgroundColor: Colors.grey[200],
     primaryColor: primary,
     appBarTheme: const AppBarTheme(
       elevation: 0,

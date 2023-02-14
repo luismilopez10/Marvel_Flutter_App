@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:marvel_comics/ui/screens/check_auth_screen.dart';
+
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'ui/screens/screens.dart';
 import 'providers/providers.dart';
 import 'share_preferences/preferences.dart';
+import 'package:marvel_comics/ui/screens/check_auth_screen.dart';
 import 'package:marvel_comics/services/services.dart';
-import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

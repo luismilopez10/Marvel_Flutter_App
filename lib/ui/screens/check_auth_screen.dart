@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+
 import 'package:marvel_comics/ui/screens/screens.dart';
 import 'package:marvel_comics/services/services.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:marvel_comics/providers/providers.dart';
@@ -15,6 +16,8 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: ChangeNotifierProvider(
         create: (_) => LoginProvider(),
@@ -22,25 +25,25 @@ class RegisterScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 200,),
+                SizedBox(height: screenSize.height * 0.2,),
                 AuthCard(
                   child: Column(children: [
-                    const SizedBox(height: 10),
-                    const Text('SIGN UP', style: TextStyle(fontFamily: 'Marvel', fontSize: 40),),
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenSize.height * 0.02),
+                    Text('SIGN UP', style: TextStyle(fontFamily: 'Marvel', fontSize: screenSize.height * 0.055),),
+                    SizedBox(height: screenSize.height * 0.035),
                     _RegisterForm(),
                   ]),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: screenSize.height * 0.035),
                 TextButton(
                   onPressed: () => Navigator.pushReplacementNamed(context, LoginScreen.routerName),
                   style: ButtonStyle(
                     overlayColor: MaterialStateProperty.all(AppTheme.primary.withOpacity(0.1)),
                     shape: MaterialStateProperty.all(const StadiumBorder()),
                   ),
-                  child: const Text('Already have an account', style: TextStyle(fontSize: 16, color: AppTheme.marvelWhite),),
+                  child: const Text('Already have an account', style: TextStyle(fontSize: 18, color: AppTheme.marvelWhite),),
                 ),
-                const SizedBox(height: 50),
+                SizedBox(height: screenSize.height * 0.05),
               ],
             ),
           ),
@@ -55,6 +58,7 @@ class _RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginFormProvider = Provider.of<LoginProvider>(context);
+    final screenSize = MediaQuery.of(context).size;
 
     return Container(
       child: Form(
@@ -80,7 +84,7 @@ class _RegisterForm extends StatelessWidget {
                   : 'Invalid Email';
               },
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: screenSize.height * 0.025),
             TextFormField(
               autocorrect: false,
               obscureText: true,
@@ -98,7 +102,7 @@ class _RegisterForm extends StatelessWidget {
                   : 'The password must have at least 6 characters';
               },
             ),
-            const SizedBox(height: 15),
+            SizedBox(height: screenSize.height * 0.025),
             loginFormProvider.loginError.isNotEmpty
             ? Row(
                 children: [
@@ -109,7 +113,7 @@ class _RegisterForm extends StatelessWidget {
                 ],
               )
             : Container(),
-            const SizedBox(height: 30),
+            SizedBox(height: screenSize.height * 0.04),
             _SignUpButton(loginFormProvider),
           ],
         )
