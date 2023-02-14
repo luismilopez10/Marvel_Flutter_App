@@ -9,6 +9,7 @@ class ComicsService extends ChangeNotifier {
   final _hash = 'a7b33cb2ba87e5b7607657916b9d37cf';
   final _limit = 20;
   int _comicsPage = 0;
+  bool isBusy = false;
 
   List<Comic> comics = [];
 
@@ -17,8 +18,12 @@ class ComicsService extends ChangeNotifier {
   }
   
   getComics() async {
+    isBusy = true;
+    notifyListeners();
+
     int offset = 20 * _comicsPage;
     _comicsPage++;
+    print('Fetching more comics');
     
     final url = Uri.https(_baseUrl, '/v1/public/comics',
       {'ts': _ts, 
@@ -32,6 +37,7 @@ class ComicsService extends ChangeNotifier {
 
     this.comics.addAll(comicsResponse.data.results);
 
+    isBusy = false;
     notifyListeners();
   }
 }

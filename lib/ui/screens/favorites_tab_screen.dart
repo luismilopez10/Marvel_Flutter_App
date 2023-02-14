@@ -25,9 +25,21 @@ class _FavoritesTabScreenState extends State<FavoritesTabScreen> with AutomaticK
           favoriteComics.isEmpty
           ? const Center(child: Text('Add some Comics to your favorite list first!'))
           : useMobileLayout
-            // ? _ComicsMobile(screenName, comics)
-            ? ComicsMobileColumns(FavoritesTabScreen.routerName, favoriteComics)
-            : ComicsTablet(FavoritesTabScreen.routerName, favoriteComics),
+            ? ComicsMobile(
+                screenName: FavoritesTabScreen.routerName, 
+                comics: favoriteComics,
+                onNextPage: () {},
+              )
+            // ? ComicsMobileColumns(
+            //     screenName: FavoritesTabScreen.routerName, 
+            //     comics: favoriteComics,
+            //     onNextPage: () {},
+            //   )
+            : ComicsTablet(
+                screenName: FavoritesTabScreen.routerName, 
+                comics: favoriteComics,
+                onNextPage: () {},
+              ),
         ],
       ),
     );

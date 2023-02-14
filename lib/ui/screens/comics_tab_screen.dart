@@ -13,7 +13,7 @@ class ComicsTabScreen extends StatefulWidget {
 class _ComicsTabScreenState extends State<ComicsTabScreen> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
-    final comics = Provider.of<ComicsService>(context).comics;
+    final comicsService = Provider.of<ComicsService>(context);
     final useMobileLayout = MediaQuery.of(context).size.shortestSide < 550;
 
     return SafeArea(
@@ -21,9 +21,33 @@ class _ComicsTabScreenState extends State<ComicsTabScreen> with AutomaticKeepAli
         children: [
           ComicsBackground(),
           useMobileLayout
-            // ? _ComicsMobile(screenName, comics)
-            ? ComicsMobileColumns(ComicsTabScreen.routerName, comics)
-            : ComicsTablet(ComicsTabScreen.routerName, comics),
+            ? ComicsMobile(
+                screenName: ComicsTabScreen.routerName, 
+                comics: comicsService.comics,
+                onNextPage: () {
+                  if (!comicsService.isBusy) {
+                    comicsService.getComics();
+                  }
+                },
+              )
+            // ? ComicsMobileColumns(
+            //     screenName: ComicsTabScreen.routerName, 
+            //     comics: comicsService.comics,
+            //     onNextPage: () {
+            //       if (!comicsService.isBusy) {
+            //         comicsService.getComics();
+            //       }
+            //     },
+            //   )
+            : ComicsTablet(
+                screenName: ComicsTabScreen.routerName, 
+                comics: comicsService.comics,
+                onNextPage: () {
+                  if (!comicsService.isBusy) {
+                    comicsService.getComics();
+                  }
+                },
+              ),
         ],
       ),
     );
