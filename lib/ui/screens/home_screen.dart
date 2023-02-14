@@ -5,15 +5,15 @@ import 'package:marvel_comics/providers/providers.dart';
 import 'package:marvel_comics/theme/app_theme.dart';
 import 'package:marvel_comics/ui/screens/screens.dart';
 import 'package:marvel_comics/share_preferences/preferences.dart';
+import 'package:marvel_comics/services/services.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routerName = 'Home';
   
-  const HomeScreen({Key? key}) : super(key: key);
-  
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final authService = Provider.of<AuthService>(context, listen: false);
     
     return ChangeNotifierProvider(
       create: (_) => NavigationProvider(),
@@ -22,24 +22,23 @@ class HomeScreen extends StatelessWidget {
           appBar: AppBar(
             title: const Text('MARVEL', style: TextStyle(fontFamily: 'Marvel', fontSize: 50, color: AppTheme.marvelWhite),),
             leading: IconButton(
-              icon: Icon(themeProvider.currentTheme == AppTheme.lightTheme
-                ? Icons.light_mode_outlined
-                : Icons.dark_mode_outlined),
               onPressed: () {
-                Preferences.isDarkmode = !Preferences.isDarkmode;    
-                Preferences.isDarkmode
-                  ? themeProvider.setDarkmode()
-                  : themeProvider.setLightmode();
+                authService.logout();
+                Navigator.pushReplacementNamed(context, LoginScreen.routerName);
               },
+              icon: const Icon(Icons.logout_outlined)
             ),
             actions: [
               IconButton(
+                icon: Icon(themeProvider.currentTheme == AppTheme.lightTheme
+                  ? Icons.light_mode_outlined
+                  : Icons.dark_mode_outlined),
                 onPressed: () {
-                  //TODO: Logout
-                  print('Logout');
-                  return null;
+                  Preferences.isDarkmode = !Preferences.isDarkmode;
+                  Preferences.isDarkmode
+                    ? themeProvider.setDarkmode()
+                    : themeProvider.setLightmode();
                 },
-                icon: const Icon(Icons.logout_outlined)
               ),
             ],
           ),
@@ -56,10 +55,14 @@ class _Pages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigationProvider = Provider.of<NavigationProvider>(context);
+    final useMobileLayout = MediaQuery.of(context).size.shortestSide < 550;
 
     return PageView(
       controller: navigationProvider.pageController,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: useMobileLayout
+        ? const NeverScrollableScrollPhysics()
+        : null,
+      onPageChanged: (i) => navigationProvider.currentPage = i,
       children: [
         ComicsTabScreen(),
         FavoritesTabScreen(),

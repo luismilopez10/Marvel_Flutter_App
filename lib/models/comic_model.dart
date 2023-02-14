@@ -82,68 +82,73 @@ class Data {
 
 class Comic {
     Comic({
+        this.firebase_id,
+        this.user,
         required this.id,
-        required this.digitalId,
+        this.digitalId,
         required this.title,
-        required this.issueNumber,
-        required this.variantDescription,
+        this.issueNumber,
+        this.variantDescription,
         this.description,
-        required this.modified,
-        required this.isbn,
-        required this.upc,
-        required this.diamondCode,
-        required this.ean,
-        required this.issn,
-        required this.format,
+        this.modified,
+        this.isbn,
+        this.upc,
+        this.diamondCode,
+        this.ean,
+        this.issn,
+        this.format,
         required this.pageCount,
-        required this.textObjects,
-        required this.resourceUri,
+        this.textObjects,
+        this.resourceUri,
         required this.urls,
-        required this.series,
-        required this.variants,
-        required this.collections,
-        required this.collectedIssues,
+        this.series,
+        this.variants,
+        this.collections,
+        this.collectedIssues,
         required this.dates,
         required this.prices,
         required this.thumbnail,
         required this.images,
-        required this.creators,
-        required this.characters,
-        required this.stories,
-        required this.events,
+        this.creators,
+        this.characters,
+        this.stories,
+        this.events,
     });
 
+    String? firebase_id;
+    String? user;
     int id;
-    int digitalId;
+    int? digitalId;
     String title;
-    int issueNumber;
-    String variantDescription;
+    int? issueNumber;
+    String? variantDescription;
     String? description;
-    String modified;
-    Isbn isbn;
-    String upc;
-    DiamondCode diamondCode;
-    String ean;
-    String issn;
-    Format format;
+    String? modified;
+    String? isbn;
+    String? upc;
+    DiamondCode? diamondCode;
+    Ean? ean;
+    String? issn;
+    Format? format;
     int pageCount;
-    List<TextObject> textObjects;
-    String resourceUri;
+    List<TextObject>? textObjects;
+    String? resourceUri;
     List<Url> urls;
-    Series series;
-    List<Series> variants;
-    List<dynamic> collections;
-    List<Series> collectedIssues;
+    Series? series;
+    List<Series>? variants;
+    List<Series>? collections;
+    List<Series>? collectedIssues;
     List<Date> dates;
     List<Price> prices;
     Thumbnail thumbnail;
     List<Thumbnail> images;
-    Creators creators;
-    Characters characters;
-    Stories stories;
-    Characters events;
+    Creators? creators;
+    Characters? characters;
+    Stories? stories;
+    Characters? events;
 
     factory Comic.fromMap(Map<String, dynamic> json) => Comic(
+        user: json["user"],
         id: json["id"],
         digitalId: json["digitalId"],
         title: json["title"],
@@ -151,31 +156,32 @@ class Comic {
         variantDescription: json["variantDescription"],
         description: json["description"],
         modified: json["modified"],
-        isbn: isbnValues.map[json["isbn"]]!,
+        isbn: json["isbn"],
         upc: json["upc"],
-        diamondCode: diamondCodeValues.map[json["diamondCode"]]!,
-        ean: json["ean"],
+        diamondCode: diamondCodeValues.map[json["diamondCode"]],
+        ean: eanValues.map[json["ean"]],
         issn: json["issn"],
-        format: formatValues.map[json["format"]]!,
+        format: formatValues.map[json["format"]],
         pageCount: json["pageCount"],
-        textObjects: List<TextObject>.from(json["textObjects"].map((x) => TextObject.fromMap(x))),
+        textObjects: json["textObjects"] == null ? [] : List<TextObject>.from(json["textObjects"]!.map((x) => TextObject.fromMap(x))),
         resourceUri: json["resourceURI"],
         urls: List<Url>.from(json["urls"].map((x) => Url.fromMap(x))),
-        series: Series.fromMap(json["series"]),
-        variants: List<Series>.from(json["variants"].map((x) => Series.fromMap(x))),
-        collections: List<dynamic>.from(json["collections"].map((x) => x)),
-        collectedIssues: List<Series>.from(json["collectedIssues"].map((x) => Series.fromMap(x))),
+        series: json["series"] == null ? null : Series.fromMap(json["series"]),
+        variants: json["variants"] == null ? [] : List<Series>.from(json["variants"]!.map((x) => Series.fromMap(x))),
+        collections: json["collections"] == null ? [] : List<Series>.from(json["collections"]!.map((x) => Series.fromMap(x))),
+        collectedIssues: json["collectedIssues"] == null ? [] : List<Series>.from(json["collectedIssues"]!.map((x) => Series.fromMap(x))),
         dates: List<Date>.from(json["dates"].map((x) => Date.fromMap(x))),
         prices: List<Price>.from(json["prices"].map((x) => Price.fromMap(x))),
         thumbnail: Thumbnail.fromMap(json["thumbnail"]),
         images: List<Thumbnail>.from(json["images"].map((x) => Thumbnail.fromMap(x))),
-        creators: Creators.fromMap(json["creators"]),
-        characters: Characters.fromMap(json["characters"]),
-        stories: Stories.fromMap(json["stories"]),
-        events: Characters.fromMap(json["events"]),
+        creators: json["creators"] == null ? null : Creators.fromMap(json["creators"]),
+        characters: json["characters"] == null ? null : Characters.fromMap(json["characters"]),
+        stories: json["stories"] == null ? null : Stories.fromMap(json["stories"]),
+        events: json["events"] == null ? null : Characters.fromMap(json["events"]),
     );
 
     Map<String, dynamic> toMap() => {
+        "user": user,
         "id": id,
         "digitalId": digitalId,
         "title": title,
@@ -183,28 +189,28 @@ class Comic {
         "variantDescription": variantDescription,
         "description": description,
         "modified": modified,
-        "isbn": isbnValues.reverse[isbn],
+        "isbn": isbn,
         "upc": upc,
         "diamondCode": diamondCodeValues.reverse[diamondCode],
-        "ean": ean,
+        "ean": eanValues.reverse[ean],
         "issn": issn,
         "format": formatValues.reverse[format],
         "pageCount": pageCount,
-        "textObjects": List<dynamic>.from(textObjects.map((x) => x.toMap())),
+        "textObjects": textObjects == null ? [] : List<dynamic>.from(textObjects!.map((x) => x.toMap())),
         "resourceURI": resourceUri,
         "urls": List<dynamic>.from(urls.map((x) => x.toMap())),
-        "series": series.toMap(),
-        "variants": List<dynamic>.from(variants.map((x) => x.toMap())),
-        "collections": List<dynamic>.from(collections.map((x) => x)),
-        "collectedIssues": List<dynamic>.from(collectedIssues.map((x) => x.toMap())),
+        "series": series?.toMap(),
+        "variants": variants == null ? [] : List<dynamic>.from(variants!.map((x) => x.toMap())),
+        "collections": collections == null ? [] : List<dynamic>.from(collections!.map((x) => x.toMap())),
+        "collectedIssues": collectedIssues == null ? [] : List<dynamic>.from(collectedIssues!.map((x) => x.toMap())),
         "dates": List<dynamic>.from(dates.map((x) => x.toMap())),
         "prices": List<dynamic>.from(prices.map((x) => x.toMap())),
         "thumbnail": thumbnail.toMap(),
         "images": List<dynamic>.from(images.map((x) => x.toMap())),
-        "creators": creators.toMap(),
-        "characters": characters.toMap(),
-        "stories": stories.toMap(),
-        "events": events.toMap(),
+        "creators": creators?.toMap(),
+        "characters": characters?.toMap(),
+        "stories": stories?.toMap(),
+        "events": events?.toMap(),
     };
 }
 
@@ -224,7 +230,7 @@ class Characters {
     factory Characters.fromMap(Map<String, dynamic> json) => Characters(
         available: json["available"],
         collectionUri: json["collectionURI"],
-        items: List<Series>.from(json["items"].map((x) => Series.fromMap(x))),
+        items: json["items"] == null ? [] : List<Series>.from(json["items"]!.map((x) => Series.fromMap(x))),
         returned: json["returned"],
     );
 
@@ -272,7 +278,7 @@ class Creators {
     factory Creators.fromMap(Map<String, dynamic> json) => Creators(
         available: json["available"],
         collectionUri: json["collectionURI"],
-        items: List<CreatorsItem>.from(json["items"].map((x) => CreatorsItem.fromMap(x))),
+        items: json["items"] == null ? [] : List<CreatorsItem>.from(json["items"]!.map((x) => CreatorsItem.fromMap(x))),
         returned: json["returned"],
     );
 
@@ -308,13 +314,15 @@ class CreatorsItem {
     };
 }
 
-enum Role { EDITOR, WRITER, PENCILLER, PENCILLER_COVER, COLORIST, INKER, LETTERER, PENCILER }
+enum Role { EDITOR, PENCILLER_COVER, WRITER, OTHER, COLORIST, INKER, LETTERER, PENCILLER, PENCILER, ARTIST }
 
 final roleValues = EnumValues({
+    "artist": Role.ARTIST,
     "colorist": Role.COLORIST,
     "editor": Role.EDITOR,
     "inker": Role.INKER,
     "letterer": Role.LETTERER,
+    "other": Role.OTHER,
     "penciler": Role.PENCILER,
     "penciller": Role.PENCILLER,
     "penciller (cover)": Role.PENCILLER_COVER,
@@ -341,26 +349,44 @@ class Date {
     };
 }
 
-enum DateType { ONSALE_DATE, FOC_DATE }
+enum DateType { ONSALE_DATE, FOC_DATE, UNLIMITED_DATE, DIGITAL_PURCHASE_DATE }
 
 final dateTypeValues = EnumValues({
+    "digitalPurchaseDate": DateType.DIGITAL_PURCHASE_DATE,
     "focDate": DateType.FOC_DATE,
-    "onsaleDate": DateType.ONSALE_DATE
+    "onsaleDate": DateType.ONSALE_DATE,
+    "unlimitedDate": DateType.UNLIMITED_DATE
 });
 
-enum DiamondCode { EMPTY, JUL190068 }
+enum DiamondCode { EMPTY, JUL190068, SEP090507, DEC090577, AUG082435, OCT090594 }
 
 final diamondCodeValues = EnumValues({
+    "AUG082435": DiamondCode.AUG082435,
+    "DEC090577": DiamondCode.DEC090577,
     "": DiamondCode.EMPTY,
-    "JUL190068": DiamondCode.JUL190068
+    "JUL190068": DiamondCode.JUL190068,
+    "OCT090594": DiamondCode.OCT090594,
+    "SEP090507": DiamondCode.SEP090507
 });
 
-enum Format { EMPTY, COMIC, TRADE_PAPERBACK, DIGEST }
+enum Ean { EMPTY, THE_978078513621752499, THE_978078512508252499, THE_978078512178753999, THE_978078513704752499 }
+
+final eanValues = EnumValues({
+    "": Ean.EMPTY,
+    "9780785 121787 53999": Ean.THE_978078512178753999,
+    "9780785 125082 52499": Ean.THE_978078512508252499,
+    "9780785 136217 52499": Ean.THE_978078513621752499,
+    "9780785 137047 52499": Ean.THE_978078513704752499
+});
+
+enum Format { EMPTY, COMIC, HARDCOVER, DIGITAL_COMIC, TRADE_PAPERBACK, DIGEST }
 
 final formatValues = EnumValues({
     "Comic": Format.COMIC,
     "Digest": Format.DIGEST,
+    "Digital Comic": Format.DIGITAL_COMIC,
     "": Format.EMPTY,
+    "Hardcover": Format.HARDCOVER,
     "Trade Paperback": Format.TRADE_PAPERBACK
 });
 
@@ -390,15 +416,6 @@ final extensionValues = EnumValues({
     "jpg": Extension.JPG
 });
 
-enum Isbn { EMPTY, THE_0785107991, THE_0785114513, THE_0785111298 }
-
-final isbnValues = EnumValues({
-    "": Isbn.EMPTY,
-    "0-7851-0799-1": Isbn.THE_0785107991,
-    "0-7851-1129-8": Isbn.THE_0785111298,
-    "0-7851-1451-3": Isbn.THE_0785114513
-});
-
 class Price {
     Price({
         required this.type,
@@ -419,9 +436,10 @@ class Price {
     };
 }
 
-enum PriceType { PRINT_PRICE }
+enum PriceType { PRINT_PRICE, DIGITAL_PURCHASE_PRICE }
 
 final priceTypeValues = EnumValues({
+    "digitalPurchasePrice": PriceType.DIGITAL_PURCHASE_PRICE,
     "printPrice": PriceType.PRINT_PRICE
 });
 
@@ -477,12 +495,15 @@ class StoriesItem {
     };
 }
 
-enum ItemType { COVER, INTERIOR_STORY, PROMO }
+enum ItemType { COVER, INTERIOR_STORY, EMPTY, RECAP, LETTERS, PROMO }
 
 final itemTypeValues = EnumValues({
     "cover": ItemType.COVER,
+    "": ItemType.EMPTY,
     "interiorStory": ItemType.INTERIOR_STORY,
-    "promo": ItemType.PROMO
+    "letters": ItemType.LETTERS,
+    "promo": ItemType.PROMO,
+    "recap": ItemType.RECAP
 });
 
 class TextObject {
@@ -515,9 +536,10 @@ final languageValues = EnumValues({
     "en-us": Language.EN_US
 });
 
-enum TextObjectType { ISSUE_SOLICIT_TEXT }
+enum TextObjectType { ISSUE_SOLICIT_TEXT, ISSUE_PREVIEW_TEXT }
 
 final textObjectTypeValues = EnumValues({
+    "issue_preview_text": TextObjectType.ISSUE_PREVIEW_TEXT,
     "issue_solicit_text": TextObjectType.ISSUE_SOLICIT_TEXT
 });
 
@@ -541,11 +563,13 @@ class Url {
     };
 }
 
-enum UrlType { DETAIL, PURCHASE }
+enum UrlType { DETAIL, PURCHASE, READER, IN_APP_LINK }
 
 final urlTypeValues = EnumValues({
     "detail": UrlType.DETAIL,
-    "purchase": UrlType.PURCHASE
+    "inAppLink": UrlType.IN_APP_LINK,
+    "purchase": UrlType.PURCHASE,
+    "reader": UrlType.READER
 });
 
 class EnumValues<T> {

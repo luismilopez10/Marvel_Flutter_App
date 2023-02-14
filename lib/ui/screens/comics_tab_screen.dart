@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_comics/services/services.dart';
-import 'package:marvel_comics/ui/widgets/card_swiper_widget.dart';
+import 'package:marvel_comics/ui/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ComicsTabScreen extends StatefulWidget {
@@ -16,8 +16,11 @@ class _ComicsTabScreenState extends State<ComicsTabScreen> with AutomaticKeepAli
     final comics = Provider.of<ComicsService>(context).comics;
 
     return SafeArea(
-      child: Scaffold(
-        body: CardSwiper(comics),
+      child: Stack(
+        children: [
+          ComicsBackground(),
+          ComicCard(ComicsTabScreen.routerName, comics),
+        ],
       ),
     );
   }

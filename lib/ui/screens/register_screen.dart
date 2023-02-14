@@ -8,10 +8,10 @@ import 'package:marvel_comics/theme/app_theme.dart';
 import 'package:marvel_comics/ui/input_decorations.dart';
 import 'package:marvel_comics/ui/widgets/widgets.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const String routerName = 'Login';
+class RegisterScreen extends StatelessWidget {
+  static const String routerName = 'Register';
 
-  const LoginScreen({Key? key}) : super(key: key);
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,36 +22,35 @@ class LoginScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 150,),
+                const SizedBox(height: 200,),
                 CardContainer(
-                  child: Column(children: const [
-                    SizedBox(height: 10),
-                    Text('LOGIN', style: TextStyle(fontFamily: 'Marvel', fontSize: 40),),
-                    SizedBox(height: 20),
-                    _LoginForm(),
+                  child: Column(children: [
+                    const SizedBox(height: 10),
+                    const Text('SIGN UP', style: TextStyle(fontFamily: 'Marvel', fontSize: 40),),
+                    const SizedBox(height: 20),
+                    _RegisterForm(),
                   ]),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 TextButton(
-                  onPressed: () => Navigator.pushReplacementNamed(context, RegisterScreen.routerName),
+                  onPressed: () => Navigator.pushReplacementNamed(context, LoginScreen.routerName),
                   style: ButtonStyle(
                     overlayColor: MaterialStateProperty.all(AppTheme.primary.withOpacity(0.1)),
                     shape: MaterialStateProperty.all(const StadiumBorder()),
                   ),
-                  child: const Text('Sign Up', style: TextStyle(fontSize: 16, color: AppTheme.marvelWhite),),
+                  child: const Text('Already have an account', style: TextStyle(fontSize: 16, color: AppTheme.marvelWhite),),
                 ),
                 const SizedBox(height: 50),
               ],
             ),
           ),
         ),
-      ),
+      )
     );
   }
 }
 
-class _LoginForm extends StatelessWidget {
-  const _LoginForm({Key? key}) : super(key: key);
+class _RegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +110,7 @@ class _LoginForm extends StatelessWidget {
               )
             : Container(),
             const SizedBox(height: 30),
-            _SignInButton(loginFormProvider),
-            const SizedBox(height: 25),
-            const _OrContinueWith(),
-            const SizedBox(height: 25),
-            _GoogleSignInButton(loginFormProvider),
+            _SignUpButton(loginFormProvider),
           ],
         )
       ),
@@ -123,38 +118,8 @@ class _LoginForm extends StatelessWidget {
   }
 }
 
-class _OrContinueWith extends StatelessWidget {
-  const _OrContinueWith({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: const [
-        Expanded(
-          child: Divider(
-            thickness: 1,
-            color: AppTheme.marvelWhite,
-          )
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text('Or continue with'),
-        ),
-        Expanded(
-          child: Divider(
-            thickness: 1,
-            color: AppTheme.marvelWhite,
-          )
-        ),
-      ],
-    );
-  }
-}
-
-class _SignInButton extends StatelessWidget {
-  const _SignInButton(this.loginFormProvider);
+class _SignUpButton extends StatelessWidget {
+  const _SignUpButton(this.loginFormProvider);
 
   final LoginProvider loginFormProvider;
 
@@ -170,21 +135,19 @@ class _SignInButton extends StatelessWidget {
         : () async {
           FocusScope.of(context).unfocus();
           final authService = Provider.of<AuthService>(context, listen: false);
-          final favoritesService = Provider.of<FavoritesService>(context, listen: false);
-
-          favoritesService.loadComics();
           
           if(!loginFormProvider.isValidForm()) return;
 
           loginFormProvider.isLoading = true;
 
-          final String? errorMessage = await authService.login(loginFormProvider.email, loginFormProvider.password);
+          final String? errorMessage = await authService.createUser(loginFormProvider.email, loginFormProvider.password);
 
           loginFormProvider.isLoading = false;
 
           if (errorMessage == null) {
             loginFormProvider.loginError = '';
-            Navigator.pushReplacementNamed(context, HomeScreen.routerName);
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Successful User Registration')));
+            Navigator.pushReplacementNamed(context, LoginScreen.routerName);
             return;
           }
 
@@ -197,58 +160,10 @@ class _SignInButton extends StatelessWidget {
           child: Text(
             loginFormProvider.isLoading 
               ? 'Wait'
-              : 'Sign In',
+              : 'Sign Up',
             style: const TextStyle(color: Colors.white),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _GoogleSignInButton extends StatelessWidget {
-  const _GoogleSignInButton(this.loginFormProvider);
-
-  final LoginProvider loginFormProvider;
-
-  @override
-  Widget build(BuildContext context) {
-    final favoritesService = Provider.of<FavoritesService>(context);
-
-    return GestureDetector(
-      onTap: loginFormProvider.isLoading 
-        ? null 
-        : () async {
-          FocusScope.of(context).unfocus();
-          final authService = Provider.of<AuthService>(context, listen: false);
-          
-          loginFormProvider.isLoading = true;
-
-          final errorMessage = await authService.signInWithGoogle();
-
-          await favoritesService.loadComics();
-
-          loginFormProvider.isLoading = false;
-
-          if (errorMessage == null) {
-            loginFormProvider.loginError = '';
-            Navigator.pushReplacementNamed(context, HomeScreen.routerName);
-            return;
-          }
-
-          loginFormProvider.loginError = errorMessage;
-          print(errorMessage);
-      },
-      child: Container(
-        padding: const EdgeInsets.all(4),
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-          border: Border.all(color: AppTheme.marvelWhite),
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.grey[200],
-        ),
-        child: Image.asset('assets/images/google.png', height: 20,),
       ),
     );
   }

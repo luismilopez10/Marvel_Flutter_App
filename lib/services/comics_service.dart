@@ -19,7 +19,9 @@ class ComicsService extends ChangeNotifier {
     final url = Uri.https(_baseUrl, '/v1/public/comics',
       {'ts': _ts, 
       'apikey': _apikey, 
-      'hash': _hash});
+      'hash': _hash,
+      'offset': '0',
+      'limit': '20'});
     final response = await http.get(url);
 
     final comicsResponse = comicsResponseFromMap(response.body);

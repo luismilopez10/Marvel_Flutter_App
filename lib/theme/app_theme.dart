@@ -5,6 +5,7 @@ class AppTheme {
   static const Color marvelWhite = Color(0xFFFEFEFE);
   static const Color marvelRed = Color(0xFFEC1D24);
   static const Color marvelGrey = Color(0xFF202020);
+  static const Color marvelGreyDark = Color(0xFF151515);
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: primary,
@@ -23,6 +24,7 @@ class AppTheme {
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       selectedItemColor: marvelRed,
+      backgroundColor: marvelGreyDark
     ),
   );
 }
