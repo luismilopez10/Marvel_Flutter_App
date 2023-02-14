@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marvel_comics/ui/screens/screens.dart';
 import 'package:marvel_comics/ui/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class _FavoritesTabScreenState extends State<FavoritesTabScreen> with AutomaticK
   @override
   Widget build(BuildContext context) {
     final favoriteComics = Provider.of<FavoritesService>(context).favoriteComics;
+    final useMobileLayout = MediaQuery.of(context).size.shortestSide < 550;
     
     return Scaffold(
         body: Stack(
@@ -22,7 +24,10 @@ class _FavoritesTabScreenState extends State<FavoritesTabScreen> with AutomaticK
           ComicsBackground(),
           favoriteComics.isEmpty
           ? const Center(child: Text('Add some Comics to your favorite list first!'))
-          : ComicCard(FavoritesTabScreen.routerName, favoriteComics),
+          : useMobileLayout
+            // ? _ComicsMobile(screenName, comics)
+            ? ComicsMobileColumns(FavoritesTabScreen.routerName, favoriteComics)
+            : ComicsTablet(FavoritesTabScreen.routerName, favoriteComics),
         ],
       ),
     );

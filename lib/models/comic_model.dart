@@ -294,12 +294,12 @@ class CreatorsItem {
     CreatorsItem({
         required this.resourceUri,
         required this.name,
-        required this.role,
+        this.role,
     });
 
     String resourceUri;
     String name;
-    Role role;
+    Role? role;
 
     factory CreatorsItem.fromMap(Map<String, dynamic> json) => CreatorsItem(
         resourceUri: json["resourceURI"],
@@ -314,16 +314,22 @@ class CreatorsItem {
     };
 }
 
-enum Role { EDITOR, PENCILLER_COVER, WRITER, OTHER, COLORIST, INKER, LETTERER, PENCILLER, PENCILER, ARTIST }
+enum Role { PENCILLER_COVER, COLORIST, INKER, WRITER, PENCILLER, EDITOR, OTHER, LETTERER, PENCILER, ARTIST, COLORIST_COVER, PENCILER_COVER, PAINTER_COVER, INKER_COVER, PAINTER, LAYOUT_ARTIST }
 
 final roleValues = EnumValues({
     "artist": Role.ARTIST,
     "colorist": Role.COLORIST,
+    "colorist (cover)": Role.COLORIST_COVER,
     "editor": Role.EDITOR,
     "inker": Role.INKER,
+    "inker (cover)": Role.INKER_COVER,
+    "layout artist": Role.LAYOUT_ARTIST,
     "letterer": Role.LETTERER,
     "other": Role.OTHER,
+    "painter": Role.PAINTER,
+    "painter (cover)": Role.PAINTER_COVER,
     "penciler": Role.PENCILER,
+    "penciler (cover)": Role.PENCILER_COVER,
     "penciller": Role.PENCILLER,
     "penciller (cover)": Role.PENCILLER_COVER,
     "writer": Role.WRITER
@@ -418,11 +424,11 @@ final extensionValues = EnumValues({
 
 class Price {
     Price({
-        required this.type,
+        this.type,
         required this.price,
     });
 
-    PriceType type;
+    PriceType? type;
     double price;
 
     factory Price.fromMap(Map<String, dynamic> json) => Price(
@@ -436,10 +442,11 @@ class Price {
     };
 }
 
-enum PriceType { PRINT_PRICE, DIGITAL_PURCHASE_PRICE }
+enum PriceType { PRINT_PRICE, DIGITAL_SALE_PRICE, DIGITAL_PURCHASE_PRICE }
 
 final priceTypeValues = EnumValues({
     "digitalPurchasePrice": PriceType.DIGITAL_PURCHASE_PRICE,
+    "digitalSalePrice": PriceType.DIGITAL_SALE_PRICE,
     "printPrice": PriceType.PRINT_PRICE
 });
 

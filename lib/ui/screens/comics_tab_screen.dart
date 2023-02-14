@@ -14,12 +14,16 @@ class _ComicsTabScreenState extends State<ComicsTabScreen> with AutomaticKeepAli
   @override
   Widget build(BuildContext context) {
     final comics = Provider.of<ComicsService>(context).comics;
+    final useMobileLayout = MediaQuery.of(context).size.shortestSide < 550;
 
     return SafeArea(
       child: Stack(
         children: [
           ComicsBackground(),
-          ComicCard(ComicsTabScreen.routerName, comics),
+          useMobileLayout
+            // ? _ComicsMobile(screenName, comics)
+            ? ComicsMobileColumns(ComicsTabScreen.routerName, comics)
+            : ComicsTablet(ComicsTabScreen.routerName, comics),
         ],
       ),
     );

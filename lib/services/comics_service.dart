@@ -7,6 +7,8 @@ class ComicsService extends ChangeNotifier {
   final _ts = '1';
   final _apikey = '2ea7eb9be7d80c317d179439c8d655a0';
   final _hash = 'a7b33cb2ba87e5b7607657916b9d37cf';
+  final _limit = 20;
+  int _comicsPage = 0;
 
   List<Comic> comics = [];
 
@@ -15,13 +17,15 @@ class ComicsService extends ChangeNotifier {
   }
   
   getComics() async {
+    int offset = 20 * _comicsPage;
+    _comicsPage++;
     
     final url = Uri.https(_baseUrl, '/v1/public/comics',
       {'ts': _ts, 
       'apikey': _apikey, 
       'hash': _hash,
-      'offset': '0',
-      'limit': '20'});
+      'offset': '$offset',
+      'limit': '$_limit'});
     final response = await http.get(url);
 
     final comicsResponse = comicsResponseFromMap(response.body);

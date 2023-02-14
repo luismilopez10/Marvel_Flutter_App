@@ -23,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 200,),
-                CardContainer(
+                AuthCard(
                   child: Column(children: [
                     const SizedBox(height: 10),
                     const Text('SIGN UP', style: TextStyle(fontFamily: 'Marvel', fontSize: 40),),

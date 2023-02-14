@@ -20,10 +20,11 @@ class LoginScreen extends StatelessWidget {
         create: (_) => LoginProvider(),
         child: LoginBackground(
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 const SizedBox(height: 150,),
-                CardContainer(
+                AuthCard(
                   child: Column(children: const [
                     SizedBox(height: 10),
                     Text('LOGIN', style: TextStyle(fontFamily: 'Marvel', fontSize: 40),),

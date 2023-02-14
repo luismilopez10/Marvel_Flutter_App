@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_comics/theme/app_theme.dart';
 
-class CardContainer extends StatelessWidget {
+class AuthCard extends StatelessWidget {
   final Widget child;
 
-  const CardContainer({super.key, required this.child});
+  const AuthCard({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
