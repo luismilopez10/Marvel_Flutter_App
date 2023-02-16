@@ -27,7 +27,7 @@ class _ComicsTabletState extends State<ComicsTablet> {
     super.initState();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 500) {
+      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 1000) {
         widget.onNextPage();
       }
     });
@@ -53,7 +53,6 @@ class _ComicsTabletState extends State<ComicsTablet> {
       children: List.generate(widget.comics.length, (index) {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 60),
-          color: AppTheme.marvelRed,
           child: ComicCard(widget.screenName, widget.comics[index]),
         );
       }),

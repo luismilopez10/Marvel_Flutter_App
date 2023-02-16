@@ -62,18 +62,18 @@ class ComicCard extends StatelessWidget {
               thickness: 2,
               height: 2,
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 15,),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 comic.title,
                 textAlign: TextAlign.center,
-                maxLines: 2, 
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.robotoCondensed(
                   fontStyle: FontStyle.normal, 
                   fontWeight: FontWeight.w800, 
-                  fontSize: 20, 
+                  fontSize: 16, 
                   color: AppTheme.marvelWhite
                 ),
               ),

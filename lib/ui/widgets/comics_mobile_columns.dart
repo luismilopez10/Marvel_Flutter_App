@@ -27,7 +27,7 @@ class _ComicsMobileColumnsState extends State<ComicsMobileColumns> {
     super.initState();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 500) {
+      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 1000) {
         widget.onNextPage();
       }
     });
@@ -46,14 +46,13 @@ class _ComicsMobileColumnsState extends State<ComicsMobileColumns> {
     return GridView.count(
       controller: scrollController,
       padding: const EdgeInsets.symmetric(vertical: 30),
-      childAspectRatio: screenSize.height * 0.00085, // 0.64
+      childAspectRatio: screenSize.height * 0.0008, // 0.64
       mainAxisSpacing: screenSize.height * 0.04,
       crossAxisCount: 2,
       physics: const BouncingScrollPhysics(),
       children: List.generate(widget.comics.length, (index) {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
-          color: AppTheme.marvelRed,
           child: ComicCard(widget.screenName, widget.comics[index]),
         );
       }),

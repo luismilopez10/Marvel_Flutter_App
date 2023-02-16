@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -108,13 +109,43 @@ class _VariantCovers extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: variantCovers.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: screenSize.width * 0.02),
-                    width: screenSize.width * 0.36,
-                    child: FadeInImage(
-                      fit: BoxFit.contain,
-                      placeholder: const AssetImage('assets/images/loading.gif'),
-                      image: NetworkImage('${variantCovers[index].path}.${variantCovers[index].extension.name.toLowerCase()}'))
+                  return GestureDetector(
+                    onTap: () async {
+                      await showDialog(
+                        context: context, 
+                        builder: (_) {
+                          return Dialog(
+                            child: Container(
+                              color: Colors.black,
+                              width: screenSize.width * 0.8,
+                              height: screenSize.height * 0.8,
+                              child: Swiper(
+                                physics: const BouncingScrollPhysics(),
+                                index: index,
+                                itemCount: variantCovers.length,
+                                loop: false,
+                                itemBuilder: (context, index) {
+                                  return FadeInImage(
+                                    fit: BoxFit.contain,
+                                    placeholder: const AssetImage('assets/images/loading.gif'),
+                                    image: NetworkImage('${variantCovers[index].path}.${variantCovers[index].extension.name.toLowerCase()}'),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: screenSize.width * 0.02),
+                      width: screenSize.width * 0.36,
+                      child: FadeInImage(
+                        fit: BoxFit.contain,
+                        placeholder: const AssetImage('assets/images/loading.gif'),
+                        image: NetworkImage('${variantCovers[index].path}.${variantCovers[index].extension.name.toLowerCase()}'),
+                      ),
+                    ),
                   );
                 }
               ),
@@ -211,18 +242,18 @@ class _PosterAndTitleMobile extends StatelessWidget {
                 tag: '${comic.id}-${screenName}',
                 child: comic.images.isNotEmpty
                 ? FadeInImage(
-                  placeholder: const AssetImage('assets/images/loading.gif'),
-                  image: NetworkImage('${comic.images.first.path}.${comic.images.first.extension.name.toLowerCase()}'),
-                  height: screenSize.height * 0.2,
+                    placeholder: const AssetImage('assets/images/loading.gif'),
+                    image: NetworkImage('${comic.images.first.path}.${comic.images.first.extension.name.toLowerCase()}'),
+                    width: screenSize.width * 0.25,
                   )
                 : Image(            
                     image: const AssetImage('assets/images/no-image.jpg'),
-                    height: screenSize.height * 0.2,
+                    width: screenSize.width * 0.25,
                   ),
               ),
               SizedBox(width: screenSize.width * 0.04,),
               ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: screenSize.width * 0.615),
+                constraints: BoxConstraints(maxWidth: screenSize.width * 0.62),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
