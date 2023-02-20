@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:marvel_comics/models/models.dart';
 import 'package:marvel_comics/services/services.dart';
 import 'package:marvel_comics/theme/app_theme.dart';
+import 'package:marvel_comics/theme/app_constants.dart';
 
 class ComicCard extends StatelessWidget {
   final String screenName;
@@ -17,6 +18,7 @@ class ComicCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoritesService = Provider.of<FavoritesService>(context);
+    final screenSize = MediaQuery.of(context).size;
 
     return Stack(
       children: [
@@ -34,51 +36,52 @@ class ComicCard extends StatelessWidget {
             ]
           ),
         ),
-        Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                favoritesService.isFavorite(comic);
-                final isFavorite = favoritesService.isFavoriteSelectedComic;
-
-                Navigator.pushNamed(context, ComicDetailsScreen.routerName, arguments: ComicForDetailsModel(screenName, comic, isFavorite));
-              },
-              child: Hero(
+        GestureDetector(
+          onTap: () {
+            favoritesService.isFavorite(comic);
+            final isFavorite = favoritesService.isFavoriteSelectedComic;
+  
+            Navigator.pushNamed(context, ComicDetailsScreen.routerName, arguments: ComicForDetailsModel(screenName, comic, isFavorite));
+          },
+          child: Column(
+            children: [
+              Hero(
                 tag: '${comic.id}-${screenName}',
                 child: Container(
+                  constraints: BoxConstraints(minHeight: screenSize.height * 0.26),
                   child: comic.images.isNotEmpty
                     ? FadeInImage(
                         fit: BoxFit.cover,
-                        placeholder: const AssetImage('assets/images/loading.gif'),
+                        placeholder: const AssetImage(AppConstants.loadingImagePath),
                         image: NetworkImage('${comic.images.first.path}.${comic.images.first.extension.name.toLowerCase()}'))
                     : const Image(            
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/images/no-image.jpg'),)
+                        image: AssetImage(AppConstants.noImagePath),)
                 ),
               ),
-            ),
-            const Divider(
-              color: AppTheme.marvelWhite,
-              thickness: 2,
-              height: 2,
-            ),
-            const SizedBox(height: 15,),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                comic.title,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.robotoCondensed(
-                  fontStyle: FontStyle.normal, 
-                  fontWeight: FontWeight.w800, 
-                  fontSize: 16, 
-                  color: AppTheme.marvelWhite
+              const Divider(
+                color: AppTheme.marvelWhite,
+                thickness: 2,
+                height: 2,
+              ),
+              const SizedBox(height: 15,),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  comic.title,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.robotoCondensed(
+                    fontStyle: FontStyle.normal, 
+                    fontWeight: FontWeight.w800, 
+                    fontSize: 16, 
+                    color: AppTheme.marvelWhite
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

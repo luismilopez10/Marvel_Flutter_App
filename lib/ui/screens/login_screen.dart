@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 AuthCard(
                   child: Column(children: [
                     SizedBox(height: screenSize.height * 0.02),
-                    Text('LOGIN', style: TextStyle(fontFamily: 'Marvel', fontSize: screenSize.height * 0.055),),
+                    Text('LOGIN', style: TextStyle(fontFamily: 'Marvel', fontSize: screenSize.height * 0.055, color: AppTheme.marvelWhite),),
                     SizedBox(height: screenSize.height * 0.035),
                     const _LoginForm(),
                   ]),
@@ -71,6 +71,7 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
+              style: const TextStyle(color: AppTheme.marvelWhite),
               decoration: InputDecorations.authInputDecoration(
                 hintText: 'user@email.com',
                 labelText: 'Email',
@@ -91,6 +92,7 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               obscureText: true,
               keyboardType: TextInputType.visiblePassword,
+              style: const TextStyle(color: AppTheme.marvelWhite),
               decoration: InputDecorations.authInputDecoration(
                 hintText: '********',
                 labelText: 'Password',
@@ -145,7 +147,7 @@ class _OrContinueWith extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text('Or continue with'),
+          child: Text('Or continue with', style: TextStyle(color: AppTheme.marvelWhite),),
         ),
         Expanded(
           child: Divider(

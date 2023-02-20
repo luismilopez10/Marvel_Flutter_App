@@ -14,6 +14,7 @@ class AppTheme {
       elevation: 0,
       centerTitle: true,
     ),
+    hintColor: Colors.grey[400],
   );
 
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
@@ -25,7 +26,7 @@ class AppTheme {
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       selectedItemColor: marvelRed,
-      backgroundColor: marvelGreyDark
+      backgroundColor: marvelGreyDark,
     ),
   );
 }

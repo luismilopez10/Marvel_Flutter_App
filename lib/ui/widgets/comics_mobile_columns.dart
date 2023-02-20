@@ -46,7 +46,7 @@ class _ComicsMobileColumnsState extends State<ComicsMobileColumns> {
     return GridView.count(
       controller: scrollController,
       padding: const EdgeInsets.symmetric(vertical: 30),
-      childAspectRatio: screenSize.height * 0.0008, // 0.64
+      childAspectRatio: screenSize.height * 0.00079,
       mainAxisSpacing: screenSize.height * 0.04,
       crossAxisCount: 2,
       physics: const BouncingScrollPhysics(),

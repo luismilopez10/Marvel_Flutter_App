@@ -3,6 +3,7 @@ import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:marvel_comics/theme/app_constants.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -69,12 +70,12 @@ class _CustomAppBar extends StatelessWidget {
         ),
         background: comic.images.isNotEmpty
           ? FadeInImage(
-            placeholder: const AssetImage('assets/images/loading.gif'),
+            placeholder: const AssetImage(AppConstants.loadingImagePath),
             image: NetworkImage('${comic.images.first.path}.${comic.images.first.extension.name.toLowerCase()}'),
             fit: BoxFit.cover,
             )
           : const Image(            
-              image: AssetImage('assets/images/no-image.jpg'),
+              image: AssetImage(AppConstants.noImagePath),
               fit: BoxFit.cover,
             ),
       ),
@@ -125,10 +126,15 @@ class _VariantCovers extends StatelessWidget {
                                 itemCount: variantCovers.length,
                                 loop: false,
                                 itemBuilder: (context, index) {
-                                  return FadeInImage(
-                                    fit: BoxFit.contain,
-                                    placeholder: const AssetImage('assets/images/loading.gif'),
-                                    image: NetworkImage('${variantCovers[index].path}.${variantCovers[index].extension.name.toLowerCase()}'),
+                                  return InteractiveViewer(
+                                    panEnabled: true,
+                                    minScale: 1,
+                                    maxScale: 3,
+                                    child: FadeInImage(
+                                      fit: BoxFit.contain,
+                                      placeholder: const AssetImage(AppConstants.loadingImagePath),
+                                      image: NetworkImage('${variantCovers[index].path}.${variantCovers[index].extension.name.toLowerCase()}'),
+                                    ),
                                   );
                                 },
                               ),
@@ -142,7 +148,7 @@ class _VariantCovers extends StatelessWidget {
                       width: screenSize.width * 0.36,
                       child: FadeInImage(
                         fit: BoxFit.contain,
-                        placeholder: const AssetImage('assets/images/loading.gif'),
+                        placeholder: const AssetImage(AppConstants.loadingImagePath),
                         image: NetworkImage('${variantCovers[index].path}.${variantCovers[index].extension.name.toLowerCase()}'),
                       ),
                     ),
@@ -242,12 +248,12 @@ class _PosterAndTitleMobile extends StatelessWidget {
                 tag: '${comic.id}-${screenName}',
                 child: comic.images.isNotEmpty
                 ? FadeInImage(
-                    placeholder: const AssetImage('assets/images/loading.gif'),
+                    placeholder: const AssetImage(AppConstants.loadingImagePath),
                     image: NetworkImage('${comic.images.first.path}.${comic.images.first.extension.name.toLowerCase()}'),
                     width: screenSize.width * 0.25,
                   )
                 : Image(            
-                    image: const AssetImage('assets/images/no-image.jpg'),
+                    image: const AssetImage(AppConstants.noImagePath),
                     width: screenSize.width * 0.25,
                   ),
               ),
@@ -352,12 +358,12 @@ class _PosterAndTitleTablet extends StatelessWidget {
             tag: comic.id,
             child: comic.images.isNotEmpty
             ? FadeInImage(
-              placeholder: const AssetImage('assets/images/loading.gif'),
+              placeholder: const AssetImage(AppConstants.loadingImagePath),
               image: NetworkImage('${comic.images.first.path}.${comic.images.first.extension.name.toLowerCase()}'),
               height: screenSize.height * 0.2,
               )
             : Image(            
-                image: const AssetImage('assets/images/no-image.jpg'),
+                image: const AssetImage(AppConstants.noImagePath),
                 height: screenSize.height * 0.2,
               ),
           ),

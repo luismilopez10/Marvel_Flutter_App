@@ -29,7 +29,7 @@ class RegisterScreen extends StatelessWidget {
                 AuthCard(
                   child: Column(children: [
                     SizedBox(height: screenSize.height * 0.02),
-                    Text('SIGN UP', style: TextStyle(fontFamily: 'Marvel', fontSize: screenSize.height * 0.055),),
+                    Text('SIGN UP', style: TextStyle(fontFamily: 'Marvel', fontSize: screenSize.height * 0.055, color: AppTheme.marvelWhite),),
                     SizedBox(height: screenSize.height * 0.035),
                     _RegisterForm(),
                   ]),
@@ -69,6 +69,7 @@ class _RegisterForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
+              style: const TextStyle(color: AppTheme.marvelWhite),
               decoration: InputDecorations.authInputDecoration(
                 hintText: 'user@email.com',
                 labelText: 'Email',
@@ -89,6 +90,7 @@ class _RegisterForm extends StatelessWidget {
               autocorrect: false,
               obscureText: true,
               keyboardType: TextInputType.visiblePassword,
+              style: const TextStyle(color: AppTheme.marvelWhite),
               decoration: InputDecorations.authInputDecoration(
                 hintText: '********',
                 labelText: 'Password',

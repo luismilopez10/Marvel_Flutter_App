@@ -25,7 +25,7 @@ class ComicsService extends ChangeNotifier {
 
     int offset = 20 * _comicsPage;
     _comicsPage++;
-    print('Fetching more comics');
+    print('Fetching more comics, page: $_comicsPage');
     
     final url = Uri.https(_baseUrl, '/v1/public/comics',
       {'ts': _ts, 
@@ -40,6 +40,7 @@ class ComicsService extends ChangeNotifier {
     this.comics.addAll(comicsResponse.data.results);
 
     isBusy = false;
-    notifyListeners();
+    notifyListeners();    
+    print('Done!');
   }
 }
